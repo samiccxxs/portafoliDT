@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duarlin Tamarez Castillo - Tourism & Customer Experience Specialist</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #8B1538 0%, #D4AF37 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8B1538 0%, #A0522D 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0.1" /><stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:0" /></radialGradient></defs><rect width="100" height="20" fill="url(%23a)" /></svg>');
+            opacity: 0.5;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: #fff;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 2rem;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            color: #8B1538;
+            border-bottom-color: #D4AF37;
+            background: rgba(139, 21, 56, 0.1);
+        }
+
+        .nav-tab:hover {
+            color: #8B1538;
+            background: rgba(139, 21, 56, 0.05);
+        }
+
+        .content {
+            padding: 0;
+        }
+
+        .section {
+            display: none;
+            padding: 3rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #8B1538;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #D4AF37, #8B1538);
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #fff;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+        }
+
+        .contact-item i {
+            color: #D4AF37;
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .highlight {
+            color: #8B1538;
+            font-weight: 600;
+        }
+
+        .experience-timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #D4AF37, #8B1538);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 80px;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #8B1538;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 8px;
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border: 4px solid #D4AF37;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8B1538;
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            color: #D4AF37;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: #8B1538;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category h3 i {
+            color: #D4AF37;
+            margin-right: 0.5rem;
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, #D4AF37, #8B1538);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .language-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .language-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .language-card i {
+            font-size: 3rem;
+            color: #D4AF37;
+            margin-bottom: 1rem;
+        }
+
+        .language-card h3 {
+            color: #8B1538;
+            margin-bottom: 0.5rem;
+        }
+
+        .language-level {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #8B1538, #D4AF37);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.4);
+        }
+
+        .download-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .certification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .certification-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .cert-title {
+            color: #8B1538;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-institution {
+            color: #D4AF37;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-tabs {
+                padding: 0 1rem;
+            }
+
+            .nav-tab {
+                padding: 1rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+
+            .skills-grid,
+            .certification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-img">
+                <img src="img.jpg" alt="Duarlin Tamarez">
+            </div>
+            <h1>Duarlin Tamarez Castillo</h1>
+            <div class="subtitle">Tourism & Customer Experience Specialist</div>
+            <div class="tagline">Transformando cada interacción en una experiencia memorable a través del servicio excepcional y la pasión por el turismo</div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('about')">
+                <i class="fas fa-user"></i> Sobre Mí
+            </button>
+            <button class="nav-tab" onclick="showSection('experience')">
+                <i class="fas fa-briefcase"></i> Experiencia
+            </button>
+            <button class="nav-tab" onclick="showSection('skills')">
+                <i class="fas fa-star"></i> Habilidades
+            </button>
+            <button class="nav-tab" onclick="showSection('languages')">
+                <i class="fas fa-globe"></i> Idiomas
+            </button>
+            <button class="nav-tab" onclick="showSection('education')">
+                <i class="fas fa-graduation-cap"></i> Educación
+            </button>
+            <button class="nav-tab" onclick="showSection('download')">
+                <i class="fas fa-download"></i> Descargar CV
+            </button>
+        </nav>
+
+        <div class="content">
+            <!-- Sobre Mí -->
+            <section class="section active" id="about">
+                <h2>Sobre Mí</h2>
+                <div class="about-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(849) 375-6735</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>duarlint@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>República Dominicana</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-plane"></i>
+                            <span>Especialista en Turismo</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-users"></i>
+                            <span>Atención al Cliente VIP</span>
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p>Soy <span class="highlight">Duarlin Tamarez Castillo</span>, un profesional apasionado del sector turístico con una mentalidad proactiva, organizada y responsable que me distingue en cada proyecto que emprendo. Mi fortaleza radica en mis <span class="highlight">excelentes relaciones interpersonales</span> y mi genuina pasión por los nuevos retos y tendencias en la interacción con el cliente.</p>
+                        
+                        <p>Con experiencia comprobada en el <span class="highlight">aeropuerto de Punta Cana</span> y empresas líderes del sector turístico, he desarrollado competencias especializadas en atención al cliente de alto nivel, manejo de sistemas avanzados y elaboración de propuestas comerciales que generan resultados tangibles.</p>
+
+                        <p>Mi capacidad para <span class="highlight">adaptarme a entornos dinámicos</span> y mi enfoque en el aprendizaje continuo me permiten mantenerme a la vanguardia de las tendencias del turismo internacional. Busco constantemente oportunidades para innovar en la experiencia del cliente y contribuir al crecimiento de organizaciones que valoren la excelencia en el servicio.</p>
+
+                        <p><strong>Objetivo Profesional:</strong> Formar parte de un equipo dinámico en el sector turístico donde pueda aplicar mi experiencia en servicio al cliente, sistemas de gestión y propuestas comerciales para crear experiencias excepcionales que superen las expectativas de huéspedes y viajeros internacionales.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experiencia -->
+            <section class="section" id="experience">
+                <h2>Experiencia Profesional</h2>
+                <div class="experience-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024-2025</div>
+                        <div class="timeline-content">
+                            <div class="job-title">Pax Service - Servicio Air Canada</div>
+                            <div class="company">Aeropuerto Internacional Punta Cana</div>
+                            <p>Responsable del servicio especializado a pasajeros de Air Canada, garantizando una experiencia excepcional desde el check-in hasta el embarque. Manejo sistemas de gestión aeroportuaria y coordino servicios premium para viajeros internacionales de alto perfil.</p>
+                            <p><strong>Logros destacados:</strong> Gestión eficiente de check-in, resolución proactiva de situaciones complejas, y mantenimiento de estándares de servicio que reflejan la excelencia de Air Canada en uno de los aeropuertos más importantes del Caribe.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023-2024</div>
+                        <div class="timeline-content">
+                            <div class="job-title">Agente de Excursiones</div>
+                            <div class="company">Nexus Tours</div>
+                            <p>Especialista en diseño y venta de experiencias turísticas personalizadas, brindando servicio al cliente de clase mundial y manejando sistemas de reservas y computación avanzados. Responsable de la elaboración de propuestas comerciales estratégicas que maximizan la satisfacción del cliente y los resultados comerciales.</p>
+                            <p><strong>Competencias desarrolladas:</strong> Atención al cliente multiidioma, manejo de sistemas de reservas, trabajo en equipo colaborativo, y aprendizaje activo de nuevas tendencias en turismo experiencial.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habilidades -->
+            <section class="section" id="skills">
+                <h2>Competencias Profesionales</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-users"></i> Atención al Cliente</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Servicio al Cliente VIP</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Atención Multiidioma</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Resolución de Problemas</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Gestión de Quejas</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3><i class="fas fa-plane"></i> Sector Turístico</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Gestión de Check-in</span>
+                                <span>93%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 93%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Servicios Aeroportuarios</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Excursiones y Tours</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Manejo de Servicio</span>
+                                <span>91%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 91%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3><i class="fas fa-laptop"></i> Sistemas y Tecnología</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Manejo de Sistemas</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Computación Avanzada</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Sistemas de Reservas</span>
+                                <span>87%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Plataformas Aeroportuarias</span>
+                                <span>89%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 89%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3><i class="fas fa-chart-line"></i> Competencias Comerciales</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Propuestas Comerciales</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Ventas de Servicios</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Negociación</span>
+                                <span>83%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 83%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3><i class="fas fa-heart"></i> Habilidades Interpersonales</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Responsabilidad</span>
+                                <span>96%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 96%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Trabajo en Equipo</span>
+                                <span>93%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 93%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Aprendizaje Activo</span>
+                                <span>91%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 91%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Organización</span>
+                                <span>94%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 94%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Proactividad</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Idiomas -->
+            <section class="section" id="languages">
+                <h2>Competencias Lingüísticas</h2>
+                <div class="languages-grid">
+                    <div class="language-card">
+                        <i class="fas fa-flag"></i>
+                        <h3>Español</h3>
+                        <div class="language-level">Nativo</div>
+                        <p>Lengua materna con dominio completo en comunicación empresarial y atención al cliente profesional.</p>
+                    </div>
+                    <div class="language-card">
+                        <i class="fas fa-flag"></i>
+                        <h3>Inglés</h3>
+                        <div class="language-level">Avanzado (7mo Nivel)</div>
+                        <p>Cursando 6to nivel en CEFO. Competencia avanzada en comunicación con turistas internacionales y servicios aeroportuarios.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; text-align: center; color: #6c757d;">
+                    <p><i class="fas fa-globe"></i> Mi competencia bilingüe me permite brindar servicio excepcional a huéspedes y viajeros de diversas nacionalidades, especialmente en el entorno turístico internacional del Caribe.</p>
+                </div>
+            </section>
+
+            <!-- Educación -->
+            <section class="section" id="education">
+                <h2>Formación Académica</h2>
+                <div class="certification-grid">
+                    <div class="certification-card">
+                        <div class="cert-title">Bachiller</div>
+                        <div class="cert-institution">Liceo Secundario Geraldo Jansen</div>
+                        <div class="cert-date">Finalizado</div>
+                        <p>Formación integral de educación media con enfoque en ciencias sociales y humanidades, base sólida para el desarrollo profesional en el sector servicios.</p>
+                    </div>
+
+                    <div class="certification-card">
+                        <div class="cert-title">Técnico en Informática</div>
+                        <div class="cert-institution">Compu Estrella Abreu</div>
+                        <div class="cert-date">Finalizado</div>
+                        <p>Certificación técnica en sistemas informáticos, manejo avanzado de computadoras y software especializado para el sector turístico.</p>
+                    </div>
+
+                    <div class="certification-card">
+                        <div class="cert-title">Inglés Avanzado</div>
+                        <div class="cert-institution">Instituto CEFO</div>
+                        <div class="cert-date">Cursando 7mo Nivel</div>
+                        <p>Programa integral de inglés empresarial con enfoque en comunicación turística y atención al cliente internacional.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <h3 style="color: #8B1538; text-align: center; margin-bottom: 2rem;">Referencias Profesionales</h3>
+                    <div class="certification-grid">
+                        <div class="certification-card" style="background: linear-gradient(135deg, #f8f9fa, #fff);">
+                            <div class="cert-title">Sr. Francis Jisell</div>
+                            <div class="cert-institution">Supervisor Directo</div>
+                            <div class="cert-date">Tel: (829) 389-9685</div>
+                            <p>Referencia de desempeño profesional en servicios aeroportuarios y atención al cliente especializada.</p>
+                        </div>
+
+                        <div class="certification-card" style="background: linear-gradient(135deg, #f8f9fa, #fff);">
+                            <div class="cert-title">Sr. Estrella Castillo</div>
+                            <div class="cert-institution">Referencia Profesional</div>
+                            <div class="cert-date">Tel: (829) 794-5648</div>
+                            <p>Referencia de competencias técnicas y habilidades interpersonales en el sector turístico.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Descargar CV -->
+            <section class="section" id="download">
+                <h2>Descargar Currículum</h2>
+                <div class="download-section">
+                    <h3>Obtén mi CV profesional en formato PDF</h3>
+                    <p>Descarga una versión completa y profesional de mi currículum optimizada para el sector turístico y sistemas de selección automatizados.</p>
+                    
+                    <div style="margin: 2rem 0;">
+                        <button class="download-btn" onclick="downloadPDF()">
+                            <i class="fas fa-file-pdf"></i>
+                            Descargar CV Completo
+                        </button>
+                        
+                        <button class="download-btn" onclick="downloadTourismCV()">
+                            <i class="fas fa-plane"></i>
+                            CV Sector Turístico
+                        </button>
+                        
+                        <button class="download-btn" onclick="downloadCustomerServiceCV()">
+                            <i class="fas fa-users"></i>
+                            CV Atención al Cliente
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; color: #6c757d;"></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+
+            if (sectionId === 'skills') {
+                setTimeout(animateSkillBars, 300);
+            }
+        }
+
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Encabezado con estilo burgundy/gold
+            doc.setFillColor(139, 21, 56);
+            doc.rect(0, 0, 210, 45, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.setFont("helvetica", "bold");
+            doc.text("DUARLIN TAMAREZ CASTILLO", 20, 25);
+            
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "normal");
+            doc.text("Tourism & Customer Experience Specialist", 20, 35);
+            
+            // Información de contacto
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.setFillColor(248, 249, 250);
+            doc.rect(0, 45, 210, 25, 'F');
+            
+            doc.text("Telefono: (849) 375-6735", 20, 55);
+            doc.text("Email: duarlint@gmail.com", 20, 62);
+            doc.text("Ubicacion: Republica Dominicana", 115, 55);
+            doc.text("Especialista en Turismo y Atencion al Cliente", 115, 62);
+            
+            // Perfil profesional
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("PERFIL PROFESIONAL", 20, 85);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            const profileText = doc.splitTextToSize("Profesional apasionado del sector turistico con mentalidad proactiva, organizada y responsable. Especializado en atencion al cliente de alto nivel, manejo de sistemas avanzados y elaboracion de propuestas comerciales. Experiencia comprobada en aeropuerto de Punta Cana y empresas lideres del sector turistico.", 170);
+            doc.text(profileText, 20, 95);
+            
+            // Experiencia profesional
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("EXPERIENCIA PROFESIONAL", 20, 125);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            let yPos = 140;
+            
+            doc.setFont("helvetica", "bold");
+            doc.text("Pax Service - Servicio Air Canada", 20, yPos);
+            doc.setFont("helvetica", "normal");
+            doc.text("2024-2025", 170, yPos);
+            yPos += 10;
+            doc.text("Servicio especializado a pasajeros de Air Canada en Aeropuerto Punta Cana", 20, yPos);
+            doc.text("Gestion de check-in y servicios premium para viajeros internacionales", 20, yPos + 7);
+            yPos += 22;
+            
+            doc.setFont("helvetica", "bold");
+            doc.text("Agente de Excursiones | Nexus Tours", 20, yPos);
+            doc.setFont("helvetica", "normal");
+            doc.text("2023-2024", 170, yPos);
+            yPos += 10;
+            doc.text("Diseno y venta de experiencias turisticas personalizadas", 20, yPos);
+            doc.text("Elaboracion de propuestas comerciales y atencion al cliente multiidioma", 20, yPos + 7);
+            
+            // Nueva página
+            doc.addPage();
+            
+            // Habilidades
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("COMPETENCIAS PROFESIONALES", 20, 30);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos = 45;
+            doc.text("Atencion al Cliente: Servicio VIP, Atencion Multiidioma, Resolucion de Problemas", 20, yPos);
+            yPos += 10;
+            doc.text("Sector Turistico: Gestion de Check-in, Servicios Aeroportuarios, Excursiones", 20, yPos);
+            yPos += 10;
+            doc.text("Sistemas: Manejo de Sistemas, Computacion, Plataformas de Reservas", 20, yPos);
+            yPos += 10;
+            doc.text("Comercial: Propuestas Comerciales, Ventas de Servicios, Negociacion", 20, yPos);
+            yPos += 10;
+            doc.text("Interpersonales: Responsabilidad, Trabajo en Equipo, Proactividad", 20, yPos);
+            
+            // Idiomas
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("IDIOMAS", 20, yPos + 25);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos += 40;
+            doc.text("Espanol: Nativo - Dominio completo en comunicacion empresarial", 20, yPos);
+            doc.text("Ingles: Avanzado (7mo Nivel CEFO) - Atencion a turistas internacionales", 20, yPos + 10);
+            
+            // Educación
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("FORMACION ACADEMICA", 20, yPos + 30);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos += 45;
+            doc.text("Bachiller - Liceo Secundario Geraldo Jansen (Finalizado)", 20, yPos);
+            doc.text("Tecnico en Informatica - Compu Estrella Abreu (Finalizado)", 20, yPos + 10);
+            doc.text("Ingles Avanzado - Instituto CEFO (Cursando 7mo Nivel)", 20, yPos + 20);
+            
+            // Referencias
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("REFERENCIAS PROFESIONALES", 20, yPos + 40);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos += 55;
+            doc.text("Sr. Francis Jisell - Tel: (829) 389-9685", 20, yPos);
+            doc.text("Sr. Estrella Castillo - Tel: (829) 794-5648", 20, yPos + 10);
+            
+            doc.save("Duarlin_Tamarez_CV_Completo.pdf");
+        }
+
+        function downloadTourismCV() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFillColor(139, 21, 56);
+            doc.rect(0, 0, 210, 45, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.setFont("helvetica", "bold");
+            doc.text("DUARLIN TAMAREZ CASTILLO", 20, 25);
+            
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "normal");
+            doc.text("Especialista en Turismo y Servicios Aeroportuarios", 20, 35);
+            
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.setFillColor(248, 249, 250);
+            doc.rect(0, 45, 210, 25, 'F');
+            
+            doc.text("Telefono: (849) 375-6735", 20, 55);
+            doc.text("Email: duarlint@gmail.com", 20, 62);
+            doc.text("Especialista en Turismo Internacional", 115, 55);
+            doc.text("Aeropuerto Punta Cana - Air Canada", 115, 62);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("PERFIL TURISTICO ESPECIALIZADO", 20, 85);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            const profileText = doc.splitTextToSize("Especialista en turismo con experiencia comprobada en servicios aeroportuarios de clase mundial y gestion de excursiones personalizadas. Experto en atencion a viajeros internacionales, manejo de sistemas de check-in y coordinacion de experiencias turisticas memorables en destinos caribenos.", 170);
+            doc.text(profileText, 20, 95);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("EXPERIENCIA EN TURISMO", 20, 125);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            let yPos = 140;
+            doc.text("Servicios Aeroportuarios Premium - Air Canada (2024-2025)", 20, yPos);
+            doc.text("Gestion especializada de pasajeros internacionales", 25, yPos + 10);
+            doc.text("Check-in avanzado y servicios VIP", 25, yPos + 20);
+            
+            yPos += 35;
+            doc.text("Agente de Excursiones - Nexus Tours (2023-2024)", 20, yPos);
+            doc.text("Diseno de experiencias turisticas personalizadas", 25, yPos + 10);
+            doc.text("Atencion multiidioma a turistas internacionales", 25, yPos + 20);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("COMPETENCIAS TURISTICAS", 20, yPos + 40);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos += 55;
+            doc.text("Servicios Aeroportuarios y Gestion de Check-in", 20, yPos);
+            doc.text("Excursiones y Tours Personalizados", 20, yPos + 10);
+            doc.text("Atencion a Viajeros Internacionales", 20, yPos + 20);
+            doc.text("Sistemas de Reservas y Plataformas Turisticas", 20, yPos + 30);
+            doc.text("Propuestas Comerciales para Experiencias Premium", 20, yPos + 40);
+            
+            doc.save("Duarlin_Tamarez_CV_Turismo.pdf");
+        }
+
+        function downloadCustomerServiceCV() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFillColor(139, 21, 56);
+            doc.rect(0, 0, 210, 45, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.setFont("helvetica", "bold");
+            doc.text("DUARLIN TAMAREZ CASTILLO", 20, 25);
+            
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "normal");
+            doc.text("Customer Experience & Service Excellence Specialist", 20, 35);
+            
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(10);
+            doc.setFillColor(248, 249, 250);
+            doc.rect(0, 45, 210, 25, 'F');
+            
+            doc.text("Telefono: (849) 375-6735", 20, 55);
+            doc.text("Email: duarlint@gmail.com", 20, 62);
+            doc.text("Especialista en Atencion al Cliente VIP", 115, 55);
+            doc.text("Servicios Multiidioma y Resolucion de Problemas", 115, 62);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("PERFIL DE ATENCION AL CLIENTE", 20, 85);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            const profileText = doc.splitTextToSize("Especialista en atencion al cliente con enfoque en excelencia del servicio y satisfaccion garantizada. Experiencia en manejo de clientes VIP, resolucion proactiva de problemas y comunicacion multiidioma. Reconocido por habilidades interpersonales excepcionales y capacidad para crear experiencias memorables.", 170);
+            doc.text(profileText, 20, 95);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("EXPERIENCIA EN SERVICIO AL CLIENTE", 20, 125);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            let yPos = 140;
+            doc.text("Atencion Premium - Air Canada Services", 20, yPos);
+            doc.text("Gestion de experiencias VIP para pasajeros internacionales", 25, yPos + 10);
+            doc.text("Resolucion de situaciones complejas en tiempo real", 25, yPos + 20);
+            
+            yPos += 35;
+            doc.text("Atencion Personalizada - Nexus Tours", 20, yPos);
+            doc.text("Servicio al cliente multiidioma especializado", 25, yPos + 10);
+            doc.text("Elaboracion de propuestas comerciales personalizadas", 25, yPos + 20);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("COMPETENCIAS EN SERVICIO", 20, yPos + 40);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            
+            yPos += 55;
+            doc.text("Atencion al Cliente VIP y Manejo de Quejas", 20, yPos);
+            doc.text("Comunicacion Multiidioma (Espanol/Ingles)", 20, yPos + 10);
+            doc.text("Resolucion de Problemas y Gestion de Crisis", 20, yPos + 20);
+            doc.text("Trabajo en Equipo y Liderazgo Colaborativo", 20, yPos + 30);
+            doc.text("Aprendizaje Activo y Adaptacion Continua", 20, yPos + 40);
+            
+            doc.save("Duarlin_Tamarez_CV_Atencion_Cliente.pdf");
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('skills').classList.contains('active')) {
+                setTimeout(animateSkillBars, 500);
+            }
+        });
+    </script>
+</body>
+</html>
