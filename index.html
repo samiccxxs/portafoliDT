@@ -1044,7 +1044,7 @@
             doc.setFontSize(10);
             
             yPos += 55;
-            doc.text("Sr. Esteban de Jesús Revi Moreta - Tel: (829) 363-3909", 20, yPos);
+            doc.text("Sr. Esteban de Jesús Revi Moreta - Tel: (829) 363-3909 ", 20, yPos);
             doc.text("Sr. Estrella Castillo - Tel: (829) 794-5648", 20, yPos + 10);
             
             doc.save("Duarlin_Tamarez_CV_Completo.pdf");
@@ -1052,7 +1052,7 @@
 
         function downloadTourismCV() {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF();s
             
             doc.setFillColor(139, 21, 56);
             doc.rect(0, 0, 210, 45, 'F');
